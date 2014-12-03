@@ -14,8 +14,9 @@ extension SKNode {
         
         let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks")
         
-        var sceneData = NSData.dataWithContentsOfFile(path, options: .DataReadingMappedIfSafe, error: nil)
-        var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
+        var sceneData = NSData(contentsOfFile:path!, options: .DataReadingMappedIfSafe, error: nil)
+        
+        var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData!)
         
         archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
         let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as GameScene
@@ -58,7 +59,7 @@ class GameViewController: UIViewController {
         let buttonImage = UIImage(named:"BurstAircraftPause")
         
         pauseButton = UIButton()
-        pauseButton.frame = CGRectMake(10, 25, buttonImage.size.width, buttonImage.size.height)
+        pauseButton.frame = CGRectMake(10, 25, buttonImage!.size.width, buttonImage!.size.height)
         pauseButton.setBackgroundImage(buttonImage, forState: .Normal)
         pauseButton.addTarget(self, action: "pause", forControlEvents: .TouchUpInside)
         view.addSubview(pauseButton)
@@ -127,9 +128,9 @@ class GameViewController: UIViewController {
 
     override func supportedInterfaceOrientations() -> Int {
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            return Int(UIInterfaceOrientationMask.Portrait.toRaw())
+            return Int(UIInterfaceOrientationMask.Portrait.rawValue)
         } else {
-            return Int(UIInterfaceOrientationMask.All.toRaw())
+            return Int(UIInterfaceOrientationMask.All.rawValue)
         }
     }
 
